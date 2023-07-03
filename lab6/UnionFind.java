@@ -63,6 +63,7 @@ public class UnionFind {
        allowing for fast search-time. */
     public int find(int vertex) {
         // TODO
+        validate(vertex);
         int root = vertex;
         while (parent[root] >= 0){
             root = parent(root);
