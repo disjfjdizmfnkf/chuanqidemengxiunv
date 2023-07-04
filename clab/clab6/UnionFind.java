@@ -16,8 +16,8 @@ public class UnionFind {
     /* Throws an exception if v1 is not a valid index. */
     private void validate(int vertex) {
         // TODO
-        if(vertex > ufArray.length || vertex < 0){
-            throw new RuntimeException("v1 is not a valid index.");
+        if(vertex >= ufArray.length || vertex < 0){
+            throw new IllegalArgumentException("Invalid index");
         }
     }
 
@@ -44,24 +44,26 @@ public class UnionFind {
         return find(v1) == find(v2);
     }
 
-    /* Connects two elements v1 and v2 together. v1 and v2 can be any valid 
+    /* Connects two elements v1 and v2 together. v1 and v2 can be any valid
        elements, and a union-by-size heuristic is used. If the sizes of the sets
-       are equal, tie break by connecting v1's root to v2's root. Unioning a 
-       vertex with itself or vertices that are already connected should not 
+       are equal, tie break by connecting v1's root to v2's root. Unioning a
+       vertex with itself or vertices that are already connected should not
        change the sets but may alter the internal structure of the data. */
     public void union(int v1, int v2) {
         // TODO
         validate(v1);
         validate(v2);
-        if (!connected(v1, v2)){
-            if (sizeOf(v1) >= sizeOf(v2)){
-                ufArray[find(v2)] = find(v1);
-                ufArray[find(v1)] -= sizeOf(v2);
-            }
-            else {
-                ufArray[find(v1)] = find(v2);
-                ufArray[find(v2)] -= sizeOf(v1);
-            }
+        int v1_root = find(v1);
+        int v2_root = find(v2);
+        if (v1_root == v2_root) {
+            return;
+        }
+        if (sizeOf(v1_root) > sizeOf(v2_root)) {
+            ufArray[v1_root] -= sizeOf(v2_root);
+            ufArray[v2_root] = v1_root;
+        } else {
+            ufArray[v2_root] -= sizeOf(v1_root);
+            ufArray[v1_root] = v2_root;
         }
     }
 
