@@ -4,9 +4,9 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private int N;
-    private int[] grid;           //使用整数数组做instance variable
+    private int[][] grid;           //使用整数数组做instance variable
     private WeightedQuickUnionUF uf;
-    private WeightedQuickUnionUF ufWithoutBottom;
+    private WeightedQuickUnionUF ufWithoutBottom;//上下贯通（union 最底层）会导致backwash
     private int opened_counter = 0;
     /** create N-by-N grid, with all sites initially blocked*/
     public Percolation(int N){
@@ -14,10 +14,7 @@ public class Percolation {
         if (N <= 0){
             throw new RuntimeException("java.lang.IndexOutOfBoundsException");
         }
-        grid = new int[N*N];
-        for(int i = 0; i < N * N; i++){
-            grid[i] = 0;  // 0 means blocked
-        }
+        grid = new int[N][N];
         uf = new WeightedQuickUnionUF(N * N + 2);  //空出位置 0 和 N*N+1
         ufWithoutBottom = new WeightedQuickUnionUF(N * N +1); //空出位置 0
     }
@@ -44,22 +41,24 @@ public class Percolation {
 
     /** open the site (row, col) if it is not open already*/
     public void open(int row, int col){
-        validate(row* N + col);
-        grid[row* N + col] = 1;
-        opened_counter += 1;
-        unionAround(row, col);
+        if (!isOpen(row, col)){
+            validate(row* N + col);
+            grid[row][col] = 1;
+            opened_counter += 1;
+            unionAround(row, col);
+        }
     }
 
     /** is the site (row, col) open?*/
     public boolean isOpen(int row, int col){
         validate(row* N + col);
-        return grid[row * N + col] == 1;
+        return grid[row][col] == 1;
     }
 
     /** is the site (row, col) full?*/
     public boolean isFull(int row, int col) {
         validate(row* N + col);
-        return ufWithoutBottom.connected(0, row* N + col);
+        return ufWithoutBottom.connected(0, uf_index(row, col));
     }
 
     /** 所有open的个数 */
