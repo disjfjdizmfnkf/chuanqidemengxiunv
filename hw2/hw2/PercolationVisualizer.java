@@ -80,7 +80,7 @@ public class PercolationVisualizer {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) { //Index 0 out of bounds for length 0
         String filename = args[0];
         simulateFromFile(filename);
     }
