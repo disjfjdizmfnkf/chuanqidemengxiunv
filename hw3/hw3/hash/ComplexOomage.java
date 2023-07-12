@@ -11,12 +11,20 @@ public class ComplexOomage implements Oomage {
 
     @Override
     public int hashCode() {
-        int total = 0;
+        /*int total = 0;
         for (int x : params) {
             total = total * 256;
             total = total + x;
         }
-        return total;
+        return total;*/
+        /** 只是整合数字，没有考虑位置关系 例如：（0，225，0）和（225，0，0）的哈希码一样*/
+
+        final int prime = 31;   //使用质数31散列，有效减少哈希冲突
+        int result = 1;
+        for (int x : params){
+            result = prime * result + x;
+        }
+        return result;
     }
 
     @Override
