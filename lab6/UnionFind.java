@@ -64,18 +64,12 @@ public class UnionFind {
     public int find(int vertex) {
         // TODO
         validate(vertex);
-        int root = vertex;
-        while (parent[root] >= 0){
-            root = parent(root);
+        if (parent[vertex] < 0){
+            return vertex;
         }
-        int temp;//给vertex的parent赋值会失去对之前vertex的parent的追踪
-        while (parent[vertex] >= 0){
-            temp = parent(vertex);
-            parent[vertex] = root;
-            vertex = temp;
+        else {
+            parent[vertex] = find(parent(vertex));
+            return parent[vertex];
         }
-
-        return root;
     }
-
 }
