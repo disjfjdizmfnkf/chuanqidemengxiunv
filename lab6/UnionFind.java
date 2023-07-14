@@ -71,5 +71,6 @@ public class UnionFind {
             parent[vertex] = find(parent(vertex));
             return parent[vertex];
         }
+
     }
 }
