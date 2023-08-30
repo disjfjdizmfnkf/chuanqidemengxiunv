@@ -22,16 +22,15 @@ public class GuitarHeroLite {
                 }
             }
 
-        /* compute the superposition of samples */
+            /* compute the superposition of samples */
             double sample = stringA.sample() + stringC.sample();
 
-        /* play the sample on standard audio */
+            /* play the sample on standard audio */
             StdAudio.play(sample);
 
-        /* advance the simulation of each guitar string by one step */
+            /* advance the simulation of each guitar string by one step */
             stringA.tic();
             stringC.tic();
         }
     }
 }
-
