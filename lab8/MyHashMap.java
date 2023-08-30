@@ -8,8 +8,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     private V value;
     private Set<K> hashSet;
     private int size = 0;
-    private int 
-
+    private int sajdlsja =
     /** Removes all of the mappings from this map. */
     @Override
     public void clear() {
