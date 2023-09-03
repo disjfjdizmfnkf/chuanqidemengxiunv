@@ -3,13 +3,26 @@ package bearmaps;
 import java.util.List;
 
 public class NaivePointSet implements PointSet {
-    public NaivePointSet(List<Point> points){
+    private List<Point> points;
 
+    public NaivePointSet(List<Point> points){
+        this.points = points;
     }
 
     @Override
     public Point nearest(double x, double y) {
-        return null;
+        Point aim = new Point(x, y);
+        Point nearestPoint = points.get(0);
+
+        double minDist = Point.distance(aim, nearestPoint);
+
+        for (Point point : points){
+            if (Point.distance(point, aim) < minDist){
+                minDist = Point.distance(point, aim);
+                nearestPoint = point;
+            }
+        }
+        return nearestPoint;
     }
 
     public static void main(String[] args){
@@ -19,7 +32,7 @@ public class NaivePointSet implements PointSet {
 
         NaivePointSet nn = new NaivePointSet(List.of(p1, p2, p3));
         Point ret = nn.nearest(3.0, 4.0); // returns p2
-        ret.getX(); // evaluates to 3.3
-        ret.getY(); // evaluates to 4.4
+        System.out.println(ret.getX()); // evaluates to 3.3
+        System.out.println(ret.getY()); // evaluates to 4.4
     }
 }
