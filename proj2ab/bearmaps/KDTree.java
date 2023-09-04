@@ -51,7 +51,10 @@ public class KDTree implements PointSet{
 
         best = nearest(goodSide, goal, best, switchAxis(axis));
 
-        /* goodSide 找完之后，看看badSide有没有更进的点 */
+        /* goodSide 找完之后，看看badSide有没有更进的点
+        * 为什么使用距离的平方？
+        * 因为我们只在乎最近点，而对于那些可能的最近点，距离目标的距离和某一个方向上的平方近似
+        * */
         if (axisDistence * axisDistence < Point.distance(goal, best.point)) {
             best = nearest(badSide, goal, best, switchAxis(axis));
         }
