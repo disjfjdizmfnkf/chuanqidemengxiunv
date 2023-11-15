@@ -1,7 +1,7 @@
 import edu.princeton.cs.algs4.Queue;
 
 public class MergeSort {
-    /**
+    /** 返回两个列表中的最小值
      * Removes and returns the smallest item that is in q1 or q2.
      *
      * The method assumes that both q1 and q2 are in sorted order, with the smallest item first. At
